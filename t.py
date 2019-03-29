@@ -29,11 +29,14 @@ def main():
             if response.status_code == 200:
                 logger.info(proxies)
                 text = response.text.strip()
-                if len(text) < 32:
+                if text.replace(".", "").replace(",", "").replace(" ", "").isdigit():
                     logger.info("text: %s" % (response.text.strip(),))
                 else:
                     logger.info("%s: ProxyError[2]" % (proxies))
                     continue
+            else:
+                logger.info("%s: ProxyError[3]" % (proxies))
+                continue
         except requests.exceptions.ConnectTimeout as e:
             logger.info("%s: ConnectTimeout" % (proxies))
             continue
