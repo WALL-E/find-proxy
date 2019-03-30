@@ -5,6 +5,7 @@
 import sys
 import os
 import time
+import http
 
 import requests
 
@@ -26,7 +27,7 @@ def main():
 
         try:
             response = requests.get("http://checkip.amazonaws.com", proxies=proxies, timeout=1)
-            if response.status_code == 200:
+            if response.status_code == http.HTTPStatus.OK:
                 text = response.text.strip()
                 if text.replace(".", "").replace(",", "").replace(" ", "").isdigit():
                     logger.info("%s: Ok" % (proxies))
