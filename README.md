@@ -10,7 +10,7 @@ pip3 install -r requirements.txt
 
 ```
 
-## Run 
+## 启动
 
 直接运行t.py就可行
 
