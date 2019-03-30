@@ -27,36 +27,35 @@ def main():
         try:
             response = requests.get("http://checkip.amazonaws.com", proxies=proxies, timeout=1)
             if response.status_code == 200:
-                logger.info(proxies)
                 text = response.text.strip()
                 if text.replace(".", "").replace(",", "").replace(" ", "").isdigit():
-                    logger.info("text: %s" % (response.text.strip(),))
+                    logger.info("%s: Ok" % (proxies))
                 else:
-                    logger.info("%s: ProxyError[2]" % (proxies))
+                    logger.debug("%s: ProxyError[2]" % (proxies))
                     continue
             else:
-                logger.info("%s: ProxyError[3]" % (proxies))
+                logger.debug("%s: ProxyError[3]" % (proxies))
                 continue
         except requests.exceptions.ConnectTimeout as e:
-            logger.info("%s: ConnectTimeout" % (proxies))
+            logger.debug("%s: ConnectTimeout" % (proxies))
             continue
         except requests.exceptions.ReadTimeout as e:
-            logger.info("%s: ReadTimeout" % (proxies))
+            logger.debug("%s: ReadTimeout" % (proxies))
             continue
         except requests.exceptions.ProxyError as e:
-            logger.info("%s: ProxyError[1]" % (proxies))
+            logger.debug("%s: ProxyError[1]" % (proxies))
             continue
         except requests.exceptions.TooManyRedirects as e:
-            logger.info("%s: TooManyRedirects" % (proxies))
+            logger.debug("%s: TooManyRedirects" % (proxies))
             continue
         except requests.exceptions.ChunkedEncodingError as e:
-            logger.info("%s: ChunkedEncodingError" % (proxies))
+            logger.debug("%s: ChunkedEncodingError" % (proxies))
             continue
         except requests.exceptions.ConnectionError as e:
-            logger.info("%s: ConnectionError" % (proxies))
+            logger.debug("%s: ConnectionError" % (proxies))
             continue
 
-        # logger.info("sleep 1")
+        # logger.debug("sleep 1")
         time.sleep(1)
 
 
