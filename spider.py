@@ -43,10 +43,10 @@ def cn_66ip():
                 try:
                     ip_tmp = ipaddress.IPv4Address(ip)
                     if ip_tmp.is_private or ip_tmp.is_reserved or ip_tmp.is_multicast:
-                        print("private,reserved,multicast is not valid")
+                        logger.debug("private,reserved,multicast is not valid")
                         continue
                 except ipaddress.AddressValueError as e:
-                    print(e)
+                    logger.debug(e)
                     continue
                 results.append(content)
     return results
@@ -70,10 +70,10 @@ def cn_31f():
             try:
                 ip_tmp = ipaddress.IPv4Address(ip)
                 if ip_tmp.is_private or ip_tmp.is_reserved or ip_tmp.is_multicast:
-                    print("private,reserved,multicast is not valid")
+                    logger.debug("private,reserved,multicast is not valid")
                     continue
             except ipaddress.AddressValueError as msg:
-                print(msg)
+                logger.debug(msg)
                 continue
             results.append(content)
     return results
@@ -86,7 +86,7 @@ def get_proxy_list():
 
 
 def main():
-    print(get_proxy_list())
+    logger.debug(get_proxy_list())
 
 
 if __name__ == '__main__':
