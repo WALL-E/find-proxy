@@ -17,7 +17,6 @@ def main():
 
     while True:
         if len(proxy_list) == 0:
-            break
             proxy_list = get_proxy_list()
 
         proxies = {
