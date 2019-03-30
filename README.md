@@ -3,11 +3,12 @@
 从网上爬取到FREE PROXY并进行可用性验证, 目前只实现了对HTTP的抓取
 
 
-## Depend
+## 安装
 
-* bs4
-* ipaddress
-* requests 
+```
+pip3 install -r requirements.txt
+
+```
 
 ## Run 
 

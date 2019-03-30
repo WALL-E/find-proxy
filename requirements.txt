@@ -1,0 +1,4 @@
+bs4==0.0.1
+requests==2.21.0
+ipaddress==1.0.22
+loguru==0.2.3
