@@ -10,79 +10,25 @@ import ipaddress
 import requests
 
 from bs4 import BeautifulSoup
+from loguru import logger
 
 
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
     'Accept-Language': 'zh-Hans-CN;q=1, en;q=0.9',
     'Accept-Encoding': 'gzip, deflate, br',
-    'Connection': 'keep-alive',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36',
-    
+    'Connection': 'keep-alive',
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache',
 }
-
-
-def com_xicidaili_1():
-    results = []
-
-    for i in range(1, 21):
-        home_url = "https://www.xicidaili.com/nn/%s" % (i,)
-        response = requests.get(home_url, headers=headers)
-        html = response.text
-        soup = BeautifulSoup(html, "html.parser")
-        tables = soup.findAll('table', id="ip_list")
-        table = tables[0]
-        for tr in table.findAll('tr'):
-            tds = tr.findAll('td')
-            if len(tds) > 0:
-                ip = tds[1].string
-                port = tds[2].string
-                content = "%s:%s" %(ip, port)
-                try:
-                    ip_tmp = ipaddress.IPv4Address(ip)
-                    if ip_tmp.is_private or ip_tmp.is_reserved or ip_tmp.is_multicast:
-                        print("private,reserved,multicast is not valid")
-                        continue
-                except ipaddress.AddressValueError as e:
-                    print(e)
-                    continue
-                results.append(content)
-    return results
-
-
-def com_xicidaili_2():
-    results = []
-
-    for i in range(1, 21):
-        home_url = "https://www.xicidaili.com/wt/%s" % (i,)
-        response = requests.get(home_url, headers=headers)
-        html = response.text
-        soup = BeautifulSoup(html, "html.parser")
-        tables = soup.findAll('table', id="ip_list")
-        table = tables[0]
-        for tr in table.findAll('tr'):
-            tds = tr.findAll('td')
-            if len(tds) > 0:
-                ip = tds[1].string
-                port = tds[2].string
-                content = "%s:%s" %(ip, port)
-                try:
-                    ip_tmp = ipaddress.IPv4Address(ip)
-                    if ip_tmp.is_private or ip_tmp.is_reserved or ip_tmp.is_multicast:
-                        print("private,reserved,multicast is not valid")
-                        continue
-                except ipaddress.AddressValueError as e:
-                    print(e)
-                    continue
-                results.append(content)
-    return results
-
 
 
 def cn_66ip():
     results = []
     for i in range(1, 30):
         home_url = "http://www.66ip.cn/areaindex_%s/1.html" % (i,)
+        logger.debug(home_url)
         response = requests.get(home_url, headers=headers)
         html = response.text
         soup = BeautifulSoup(html, "html.parser")
@@ -108,6 +54,7 @@ def cn_66ip():
 
 def cn_31f():
     home_url = "http://31f.cn/http-proxy/"
+    logger.debug(home_url)
     response = requests.get(home_url, headers=headers)
     html = response.text
     soup = BeautifulSoup(html, "html.parser")
@@ -133,7 +80,8 @@ def cn_31f():
 
 
 def get_proxy_list():
-    proxy_list = cn_66ip()
+    logger.debug("Spider working")
+    proxy_list = cn_66ip() + cn_31f()
     return proxy_list
 
 
